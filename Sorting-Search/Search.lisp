@@ -5,6 +5,7 @@
 (defvar *x* (vector 4 3 2 6 7))
 (defvar *Y* (vector 7 6 3 2 1))
 (defvar *W* (vector 9 8 7 6 3))
+(defvar *Z* (vector 0 9 8 7 6 5 2 1 3 4))
 
 (defun swap (lst left right)
 	(let ((x (elt lst left)))
@@ -15,13 +16,11 @@
 (defun quick-sort (vect left right)
 	(when (>= right left)
 		(let ((q (partition vect left right)))
-			(format t "~d ~%" q)
 			(quick-sort vect left (1- q))
 			(quick-sort vect (1+ q) right))) vect)
 
 (defun partition (vect left right)
 	(let ((p (elt vect left)) (i left) (j right))
-		(format t "~d ~d ~d ~%" p i j)
 		(loop
 			(loop
 				(if (>= (elt vect i) p)
@@ -35,14 +34,9 @@
 				(if (< j left)
 					(return))
 				(setf j (1- j))) ; loop
-			(if (>= i j)(return) (swap vect i j))
-			(format t "Swapped in the loop called ~%")
-			(format t "~d ~d ~%" i j))
+			(if (>= i j)(return) (swap vect i j)))
 		(if (eql j left)
-			(return-from partition j))
-		(format t "Swapped at the end called ~%")
-		(format t "~d ~d ~%" left j)
-		i))
+			(return-from partition j)) i))
 
 
 (quick-sort *x* 0 4)
