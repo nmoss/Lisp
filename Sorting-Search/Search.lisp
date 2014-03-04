@@ -6,7 +6,17 @@
 (defvar *Y* (vector 7 6 3 2 1))
 (defvar *W* (vector 9 8 7 6 3))
 (defvar *Z* (vector 0 9 8 7 6 5 2 1 3 4))
-(defvar *D* (vector 0 2 2 2 3 2 2 1))
+(defvar *D* (vector 0 2 2 2 3 2 2 1)) ; not sure what's going on with this guy
+
+(defun binary-search (vect key left right)
+	(if (< right left)(return-from binary-search nil))
+	(let ((mid (midpoint left right)))
+		(cond ((> (elt vect mid) key)(binary-search vect key left (1- mid)))
+					((< (elt vect mid) key)(binary-search vect key (1+ mid) right))
+					(t mid))))
+
+(defun midpoint (left right)
+	(ceiling (/ (+ left right) 2)))
 
 (defun swap (lst left right)
 	(let ((x (elt lst left)))
