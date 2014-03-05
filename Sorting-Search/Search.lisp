@@ -18,11 +18,6 @@
 (defun midpoint (left right)
 	(ceiling (/ (+ left right) 2)))
 
-(defun swap (lst left right)
-	(let ((x (elt lst left)))
-		(setf (elt lst left) (elt lst right))
-		(setf (elt lst right) x)))
-
 ;;; sort vect[left..right]
 ;;; In-place version of the algorithm 
 (defun quick-sort (vect left right)
@@ -46,7 +41,7 @@
 				(if (<= j left)
 					(return))
 				(setf j (1- j))) ; loop
-			(if (>= i j)(return) (swap vect i j)))
+			(if (>= i j)(return) (rotatef (elt vect i) (elt vect j))))
 		(if (eql j left)
 			(return-from partition j)) j))
 
