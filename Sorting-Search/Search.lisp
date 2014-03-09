@@ -45,5 +45,12 @@
 		(if (eql j left)
 			(return-from partition j)) j))
 
+;;; call this instead of quick-sort which copies the vector
+;;; also takes in a function which can represent a sorting function
+(defun sort-array (vect fn)
+	(let ((v-c (copy-seq vect)))
+		(funcall fn v-c 0 (1- (length v-c)))))
+
 
 (quick-sort *x* 0 4)
+
