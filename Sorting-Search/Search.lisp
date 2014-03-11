@@ -45,12 +45,29 @@
 		(if (eql j left)
 			(return-from partition j)) j))
 
+(defun partition (vect left right)
+	(let ((p (elt vect left))(i left)(j right))
+		(while (< i j)
+			(while (< (elt vect i) p)
+				(if (>= i right)
+					(return))
+				(setf i (1+ i))) ; while
+			(while (> (elt vect j) p)
+				(if (<= j left)
+					(return))
+				(setf j (1- j)))
+			(rotatef (elt vect i)(elt vect j)))
+		(if (eql j left)
+			(return-from partition j)) j))
+
 ;;; call this instead of quick-sort which copies the vector
 ;;; also takes in a function which can represent a sorting function
 (defun sort-array (vect fn)
 	(let ((v-c (copy-seq vect)))
 		(funcall fn v-c 0 (1- (length v-c)))))
 
-
-(quick-sort *x* 0 4)
-
+;;; use this to re-write the main partition function
+(defmacro while (test &body body)
+  `(do ()
+	   ((not ,test))
+	   ,@body))
